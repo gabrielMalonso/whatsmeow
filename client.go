@@ -102,7 +102,7 @@ type Client struct {
 	pendingPhoneRerequestsLock         sync.RWMutex
 
 	appStateProc     *appstate.Processor
-	appStateSyncLock sync.Mutex
+	appStateSyncLock *semaphore.Weighted
 
 	historySyncNotifications        chan *waE2E.HistorySyncNotification
 	historySyncHandlerStarted       atomic.Bool
@@ -283,6 +283,7 @@ func NewClient(deviceStore *store.Device, log waLog.Logger) *Client {
 		eventHandlers:      make([]wrappedEventHandler, 0, 1),
 		messageRetries:     make(map[string]int),
 		appStateProc:       appstate.NewProcessor(deviceStore, log.Sub("AppState")),
+		appStateSyncLock:   semaphore.NewWeighted(1),
 		socketWait:         make(chan struct{}),
 		expectedDisconnect: exsync.NewEvent(),
 		PreKeysUploaded:    exsync.NewEvent(),

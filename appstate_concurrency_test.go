@@ -1,0 +1,304 @@
+// Copyright (c) 2026 Gabriel Alonso
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+package whatsmeow
+
+import (
+	"bytes"
+	"context"
+	"errors"
+	"sync"
+	"testing"
+	"time"
+
+	"google.golang.org/protobuf/proto"
+
+	"go.mau.fi/whatsmeow/appstate"
+	"go.mau.fi/whatsmeow/proto/waE2E"
+	"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery"
+	"go.mau.fi/whatsmeow/store"
+	"go.mau.fi/whatsmeow/types/events"
+)
+
+// The reset gate exposes the interval where a recovery has removed the old
+// version but has not installed its replacement. No network or device is used.
+type recoveryTestStore struct {
+	store.NoopStore
+	mu     sync.Mutex
+	state  appstate.HashState
+	macs   map[string][]byte
+	key    *store.AppStateSyncKey
+	reset  chan struct{}
+	resume chan struct{}
+}
+
+func (s *recoveryTestStore) GetAppStateVersion(context.Context, string) (uint64, [128]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.state.Version, s.state.Hash, nil
+}
+
+func (s *recoveryTestStore) PutAppStateVersion(_ context.Context, _ string, version uint64, hash [128]byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.state = appstate.HashState{Version: version, Hash: hash}
+	return nil
+}
+
+func (s *recoveryTestStore) DeleteAppStateVersion(context.Context, string) error {
+	s.mu.Lock()
+	s.state = appstate.HashState{}
+	s.macs = nil
+	s.mu.Unlock()
+	if s.reset != nil {
+		close(s.reset)
+		<-s.resume
+	}
+	return nil
+}
+
+func (s *recoveryTestStore) PutAppStateMutationMACs(_ context.Context, _ string, _ uint64, mutations []store.AppStateMutationMAC) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.macs == nil {
+		s.macs = make(map[string][]byte)
+	}
+	for _, mutation := range mutations {
+		s.macs[string(mutation.IndexMAC)] = bytes.Clone(mutation.ValueMAC)
+	}
+	return nil
+}
+
+func (s *recoveryTestStore) GetAppStateMutationMAC(_ context.Context, _ string, indexMAC []byte) ([]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return bytes.Clone(s.macs[string(indexMAC)]), nil
+}
+
+func (s *recoveryTestStore) DeleteAppStateMutationMACs(_ context.Context, _ string, indexMACs [][]byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for _, indexMAC := range indexMACs {
+		delete(s.macs, string(indexMAC))
+	}
+	return nil
+}
+
+func (s *recoveryTestStore) GetAppStateSyncKey(context.Context, []byte) (*store.AppStateSyncKey, error) {
+	return s.key, nil
+}
+
+func (s *recoveryTestStore) GetLatestAppStateSyncKeyID(context.Context) ([]byte, error) {
+	if s.key == nil {
+		return nil, nil
+	}
+	return []byte{1}, nil
+}
+
+func recoveryTestClient(s *recoveryTestStore) *Client {
+	return NewClient(&store.Device{AppState: s, AppStateKeys: s}, nil)
+}
+
+func recoveryTestResult(t *testing.T, version uint64) []*waE2E.PeerDataOperationRequestResponseMessage_PeerDataOperationResult {
+	t.Helper()
+	data, err := proto.Marshal(&waSyncdSnapshotRecovery.SyncdSnapshotRecovery{
+		CollectionName:   proto.String(string(appstate.WAPatchRegularLow)),
+		Version:          &waSyncdSnapshotRecovery.SyncdVersion{Version: proto.Uint64(version)},
+		CollectionLthash: make([]byte, 128),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return []*waE2E.PeerDataOperationRequestResponseMessage_PeerDataOperationResult{{
+		SyncdSnapshotFatalRecoveryResponse: &waE2E.PeerDataOperationRequestResponseMessage_PeerDataOperationResult_SyncDSnapshotFatalRecoveryResponse{CollectionSnapshot: data},
+	}}
+}
+
+func recoveryTestAwait[T any](t *testing.T, ch <-chan T) T {
+	t.Helper()
+	select {
+	case result := <-ch:
+		return result
+	case <-time.After(3 * time.Second):
+		t.Fatal("app-state operation did not finish")
+		var zero T
+		return zero
+	}
+}
+
+func TestAppStateOperationsWaitForRecovery(t *testing.T) {
+	for _, operation := range []string{"fetch", "send"} {
+		t.Run(operation, func(t *testing.T) {
+			s := &recoveryTestStore{state: appstate.HashState{Version: 1}, reset: make(chan struct{}), resume: make(chan struct{})}
+			cli := recoveryTestClient(s)
+			result := recoveryTestResult(t, 2)
+			recovered := make(chan bool, 1)
+			go func() { recovered <- cli.handleAppStateRecovery(t.Context(), "synthetic", result) }()
+			recoveryTestAwait(t, s.reset)
+			started := make(chan struct{})
+			done := make(chan error, 1)
+			go func() {
+				close(started)
+				if operation == "fetch" {
+					done <- cli.FetchAppState(t.Context(), appstate.WAPatchRegularLow, false, true)
+				} else {
+					done <- cli.SendAppState(t.Context(), appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+				}
+			}()
+			recoveryTestAwait(t, started)
+			var err error
+			early := false
+			select {
+			case err = <-done:
+				early = true
+			case <-time.After(30 * time.Millisecond):
+			}
+			close(s.resume)
+			if !early {
+				err = recoveryTestAwait(t, done)
+			}
+			if !recoveryTestAwait(t, recovered) {
+				t.Fatal("recovery handler failed")
+			}
+			if early {
+				t.Fatal("operation observed a partially installed recovery")
+			}
+			if operation == "fetch" && err != nil {
+				t.Fatal(err)
+			}
+			// The synthetic device has no send key; reaching this error after
+			// waiting proves that send resumed without attempting transport.
+			if operation == "send" && (err == nil || err.Error() != "no app state keys found, creating app state keys is not yet supported") {
+				t.Fatalf("unexpected send result: %v", err)
+			}
+			version, _, _ := s.GetAppStateVersion(t.Context(), string(appstate.WAPatchRegularLow))
+			if version != 2 {
+				t.Fatalf("recovery version = %d", version)
+			}
+		})
+	}
+}
+
+func TestAppStateRecoveryCallbacksCanFetch(t *testing.T) {
+	cli := recoveryTestClient(&recoveryTestStore{})
+	var called bool
+	cli.AddEventHandlerWithSuccessStatus(func(evt any) bool {
+		if _, ok := evt.(*events.AppStateSyncComplete); ok {
+			called = true
+			if err := cli.FetchAppState(t.Context(), appstate.WAPatchRegularLow, false, true); err != nil {
+				t.Error(err)
+			}
+			return false
+		}
+		return true
+	})
+	result := recoveryTestResult(t, 2)
+	done := make(chan bool, 1)
+	go func() { done <- cli.handleAppStateRecovery(t.Context(), "synthetic", result) }()
+	if recoveryTestAwait(t, done) || !called {
+		t.Fatal("recovery callback success semantics changed")
+	}
+}
+
+func TestCanceledAppStateOperationsPreserveState(t *testing.T) {
+	for _, operation := range []string{"fetch", "send", "recovery"} {
+		t.Run(operation, func(t *testing.T) {
+			s := &recoveryTestStore{state: appstate.HashState{Version: 1}}
+			cli := recoveryTestClient(s)
+			ctx, cancel := context.WithCancel(t.Context())
+			cancel()
+			var err error
+			switch operation {
+			case "fetch":
+				err = cli.FetchAppState(ctx, appstate.WAPatchRegularLow, true, false)
+			case "send":
+				err = cli.SendAppState(ctx, appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+			case "recovery":
+				cli.handleAppStateRecovery(ctx, "synthetic", recoveryTestResult(t, 2))
+			}
+			if operation != "recovery" && !errors.Is(err, context.Canceled) {
+				t.Fatalf("cancellation lost: %v", err)
+			}
+			version, _, _ := s.GetAppStateVersion(t.Context(), string(appstate.WAPatchRegularLow))
+			if version != 1 {
+				t.Fatalf("canceled operation advanced state to %d", version)
+			}
+		})
+	}
+}
+
+func TestAppStateFetchErrorCallbacksCanSend(t *testing.T) {
+	cli := recoveryTestClient(&recoveryTestStore{})
+	var called bool
+	cli.AddEventHandler(func(evt any) {
+		if _, ok := evt.(*events.AppStateSyncError); ok {
+			called = true
+			err := cli.SendAppState(t.Context(), appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+			if err == nil || err.Error() != "no app state keys found, creating app state keys is not yet supported" {
+				t.Errorf("callback send result: %v", err)
+			}
+		}
+	})
+	done := make(chan error, 1)
+	go func() { done <- cli.FetchAppState(t.Context(), appstate.WAPatchRegularLow, true, false) }()
+	if err := recoveryTestAwait(t, done); !errors.Is(err, ErrNotConnected) || !called {
+		t.Fatalf("fetch error/callback lost: %v (called=%v)", err, called)
+	}
+}
+
+func TestAppStateOperationsCancelWhileWaiting(t *testing.T) {
+	for _, operation := range []string{"fetch", "send", "recovery"} {
+		for _, cancellation := range []string{"before", "during"} {
+			t.Run(operation+"/"+cancellation, func(t *testing.T) {
+				s := &recoveryTestStore{state: appstate.HashState{Version: 1}}
+				cli := recoveryTestClient(s)
+				if err := cli.appStateSyncLock.Acquire(t.Context(), 1); err != nil {
+					t.Fatal(err)
+				}
+				t.Cleanup(func() { cli.appStateSyncLock.Release(1) })
+				ctx, cancel := context.WithCancel(t.Context())
+				defer cancel()
+				if cancellation == "before" {
+					cancel()
+				}
+				result := recoveryTestResult(t, 2)
+				done := make(chan error, 1)
+				go func() {
+					switch operation {
+					case "fetch":
+						done <- cli.FetchAppState(ctx, appstate.WAPatchRegularLow, true, false)
+					case "send":
+						done <- cli.SendAppState(ctx, appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+					case "recovery":
+						if !cli.handleAppStateRecovery(ctx, "canceled", result) {
+							done <- errors.New("recovery handler failed")
+						} else {
+							done <- nil
+						}
+					}
+				}()
+				if cancellation == "during" {
+					select {
+					case err := <-done:
+						t.Fatalf("operation bypassed the held lock: %v", err)
+					case <-time.After(30 * time.Millisecond):
+					}
+					cancel()
+				}
+				err := recoveryTestAwait(t, done)
+				if operation == "recovery" && err != nil {
+					t.Fatal(err)
+				} else if operation != "recovery" && !errors.Is(err, context.Canceled) {
+					t.Fatalf("cancellation lost: %v", err)
+				}
+				version, _, _ := s.GetAppStateVersion(t.Context(), string(appstate.WAPatchRegularLow))
+				if version != 1 {
+					t.Fatalf("canceled operation advanced state to %d", version)
+				}
+			})
+		}
+	}
+}
