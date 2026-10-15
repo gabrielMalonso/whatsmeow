@@ -7,6 +7,7 @@
 package whatsmeow
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"sync"
@@ -28,6 +29,8 @@ type recoveryTestStore struct {
 	store.NoopStore
 	mu     sync.Mutex
 	state  appstate.HashState
+	macs   map[string][]byte
+	key    *store.AppStateSyncKey
 	reset  chan struct{}
 	resume chan struct{}
 }
@@ -48,12 +51,51 @@ func (s *recoveryTestStore) PutAppStateVersion(_ context.Context, _ string, vers
 func (s *recoveryTestStore) DeleteAppStateVersion(context.Context, string) error {
 	s.mu.Lock()
 	s.state = appstate.HashState{}
+	s.macs = nil
 	s.mu.Unlock()
 	if s.reset != nil {
 		close(s.reset)
 		<-s.resume
 	}
 	return nil
+}
+
+func (s *recoveryTestStore) PutAppStateMutationMACs(_ context.Context, _ string, _ uint64, mutations []store.AppStateMutationMAC) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.macs == nil {
+		s.macs = make(map[string][]byte)
+	}
+	for _, mutation := range mutations {
+		s.macs[string(mutation.IndexMAC)] = bytes.Clone(mutation.ValueMAC)
+	}
+	return nil
+}
+
+func (s *recoveryTestStore) GetAppStateMutationMAC(_ context.Context, _ string, indexMAC []byte) ([]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return bytes.Clone(s.macs[string(indexMAC)]), nil
+}
+
+func (s *recoveryTestStore) DeleteAppStateMutationMACs(_ context.Context, _ string, indexMACs [][]byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for _, indexMAC := range indexMACs {
+		delete(s.macs, string(indexMAC))
+	}
+	return nil
+}
+
+func (s *recoveryTestStore) GetAppStateSyncKey(context.Context, []byte) (*store.AppStateSyncKey, error) {
+	return s.key, nil
+}
+
+func (s *recoveryTestStore) GetLatestAppStateSyncKeyID(context.Context) ([]byte, error) {
+	if s.key == nil {
+		return nil, nil
+	}
+	return []byte{1}, nil
 }
 
 func recoveryTestClient(s *recoveryTestStore) *Client {
@@ -204,5 +246,59 @@ func TestAppStateFetchErrorCallbacksCanSend(t *testing.T) {
 	go func() { done <- cli.FetchAppState(t.Context(), appstate.WAPatchRegularLow, true, false) }()
 	if err := recoveryTestAwait(t, done); !errors.Is(err, ErrNotConnected) || !called {
 		t.Fatalf("fetch error/callback lost: %v (called=%v)", err, called)
+	}
+}
+
+func TestAppStateOperationsCancelWhileWaiting(t *testing.T) {
+	for _, operation := range []string{"fetch", "send", "recovery"} {
+		for _, cancellation := range []string{"before", "during"} {
+			t.Run(operation+"/"+cancellation, func(t *testing.T) {
+				s := &recoveryTestStore{state: appstate.HashState{Version: 1}}
+				cli := recoveryTestClient(s)
+				if err := cli.appStateSyncLock.Acquire(t.Context(), 1); err != nil {
+					t.Fatal(err)
+				}
+				t.Cleanup(func() { cli.appStateSyncLock.Release(1) })
+				ctx, cancel := context.WithCancel(t.Context())
+				defer cancel()
+				if cancellation == "before" {
+					cancel()
+				}
+				result := recoveryTestResult(t, 2)
+				done := make(chan error, 1)
+				go func() {
+					switch operation {
+					case "fetch":
+						done <- cli.FetchAppState(ctx, appstate.WAPatchRegularLow, true, false)
+					case "send":
+						done <- cli.SendAppState(ctx, appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+					case "recovery":
+						if !cli.handleAppStateRecovery(ctx, "canceled", result) {
+							done <- errors.New("recovery handler failed")
+						} else {
+							done <- nil
+						}
+					}
+				}()
+				if cancellation == "during" {
+					select {
+					case err := <-done:
+						t.Fatalf("operation bypassed the held lock: %v", err)
+					case <-time.After(30 * time.Millisecond):
+					}
+					cancel()
+				}
+				err := recoveryTestAwait(t, done)
+				if operation == "recovery" && err != nil {
+					t.Fatal(err)
+				} else if operation != "recovery" && !errors.Is(err, context.Canceled) {
+					t.Fatalf("cancellation lost: %v", err)
+				}
+				version, _, _ := s.GetAppStateVersion(t.Context(), string(appstate.WAPatchRegularLow))
+				if version != 1 {
+					t.Fatalf("canceled operation advanced state to %d", version)
+				}
+			})
+		}
 	}
 }

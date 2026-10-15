@@ -44,12 +44,14 @@ func (cli *Client) fetchAppState(ctx context.Context, name appstate.WAPatchName,
 	if cli == nil {
 		return nil, ErrClientIsNil
 	}
+	if err := cli.appStateSyncLock.Acquire(ctx, 1); err != nil {
+		return nil, err
+	}
 	var syncErrors []*events.AppStateSyncError
 	var eventsToDispatch []any
 	var err error
 	func() {
-		cli.appStateSyncLock.Lock()
-		defer cli.appStateSyncLock.Unlock()
+		defer cli.appStateSyncLock.Release(1)
 		eventsToDispatch, err = cli.fetchAppStateLocked(ctx, name, fullSync, onlyIfNotSynced, &syncErrors)
 	}()
 	for _, evt := range syncErrors {
@@ -155,8 +157,10 @@ func (cli *Client) handleAppStateRecovery(
 }
 
 func (cli *Client) applyAppStateRecovery(ctx context.Context, reqID types.MessageID, snapshot *waSyncdSnapshotRecovery.SyncdSnapshotRecovery, eventsToDispatch *[]any) []any {
-	cli.appStateSyncLock.Lock()
-	defer cli.appStateSyncLock.Unlock()
+	if err := cli.appStateSyncLock.Acquire(ctx, 1); err != nil {
+		return nil
+	}
+	defer cli.appStateSyncLock.Release(1)
 	if ctx.Err() != nil {
 		return nil
 	}
@@ -605,12 +609,14 @@ func (cli *Client) sendAppState(ctx context.Context, patch appstate.PatchInfo, a
 	if cli == nil {
 		return ErrClientIsNil
 	}
+	if err := cli.appStateSyncLock.Acquire(ctx, 1); err != nil {
+		return err
+	}
 	var syncErrors []*events.AppStateSyncError
 	var eventsToDispatch []any
 	var err error
 	func() {
-		cli.appStateSyncLock.Lock()
-		defer cli.appStateSyncLock.Unlock()
+		defer cli.appStateSyncLock.Release(1)
 		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors)
 	}()
 	for _, evt := range syncErrors {
