@@ -141,6 +141,9 @@ func (cli *Client) handleAppStateRecovery(
 	name := appstate.WAPatchName(snapshot.GetCollectionName())
 	version := snapshot.GetVersion().GetVersion()
 	eventsToDispatch = cli.applyAppStateRecovery(ctx, reqID, snapshot, eventsToDispatchPtr)
+	if len(eventsToDispatch) == 0 {
+		return true
+	}
 	for _, evt := range eventsToDispatch {
 		handlerFailed := cli.dispatchEvent(evt)
 		if handlerFailed {
