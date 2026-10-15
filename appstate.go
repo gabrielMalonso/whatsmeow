@@ -22,6 +22,7 @@ import (
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waServerSync"
 	"go.mau.fi/whatsmeow/proto/waSyncAction"
+	"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery"
 	"go.mau.fi/whatsmeow/store"
 	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
@@ -44,8 +45,26 @@ func (cli *Client) fetchAppState(ctx context.Context, name appstate.WAPatchName,
 	if cli == nil {
 		return nil, ErrClientIsNil
 	}
-	cli.appStateSyncLock.Lock()
-	defer cli.appStateSyncLock.Unlock()
+	var syncErrors []*events.AppStateSyncError
+	var eventsToDispatch []any
+	var err error
+	func() {
+		cli.appStateSyncLock.Lock()
+		defer cli.appStateSyncLock.Unlock()
+		eventsToDispatch, err = cli.fetchAppStateLocked(ctx, name, fullSync, onlyIfNotSynced, &syncErrors)
+	}()
+	for _, evt := range syncErrors {
+		cli.dispatchEvent(evt)
+	}
+	return eventsToDispatch, err
+}
+
+// fetchAppStateLocked keeps the in-memory hash and stored mutation MACs in the
+// same operation, including all pages. Callers dispatch callbacks after unlock.
+func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatchName, fullSync, onlyIfNotSynced bool, syncErrors *[]*events.AppStateSyncError) ([]any, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
 	if fullSync {
 		err := cli.Store.AppState.DeleteAppStateVersion(ctx, string(name))
 		if err != nil {
@@ -82,7 +101,7 @@ func (cli *Client) fetchAppState(ctx context.Context, name appstate.WAPatchName,
 		}
 		wantSnapshot = false
 		hasMore = patches.HasMorePatches
-		state, err = cli.applyAppStatePatches(ctx, name, state, patches, fullSync, eventsToDispatchPtr)
+		state, err = cli.applyAppStatePatchesNoDispatch(ctx, name, state, patches, fullSync, eventsToDispatchPtr, syncErrors)
 		if err != nil {
 			return nil, err
 		}
@@ -119,26 +138,7 @@ func (cli *Client) handleAppStateRecovery(
 	}
 	name := appstate.WAPatchName(snapshot.GetCollectionName())
 	version := snapshot.GetVersion().GetVersion()
-	currentVersion, _, err := cli.Store.AppState.GetAppStateVersion(ctx, string(name))
-	if err != nil {
-		cli.Log.Errorf("Failed to get current app state %s version for %s: %v", name, reqID, err)
-		return true
-	} else if currentVersion >= version {
-		cli.Log.Infof("Ignoring app state recovery response for %s as current version %d is newer than or equal to recovery version %d", reqID, currentVersion, snapshot.GetVersion().GetVersion())
-		return true
-	}
-	cli.Log.Debugf("Handling app state recovery response for %s", reqID)
-	mutations, err := cli.appStateProc.ProcessRecovery(ctx, snapshot)
-	if err != nil {
-		cli.Log.Warnf("Failed to parse app state recovery blob for %s: %v", reqID, err)
-		return true
-	}
-	err = cli.collectEventsToDispatch(ctx, name, mutations, true, eventsToDispatchPtr)
-	if err != nil {
-		cli.Log.Warnf("Failed to collect app state events for %s: %v", reqID, err)
-		return true
-	}
-	eventsToDispatch = append(eventsToDispatch, &events.AppStateSyncComplete{Name: name, Version: version, Recovery: true})
+	eventsToDispatch = cli.applyAppStateRecovery(ctx, reqID, snapshot, eventsToDispatchPtr)
 	for _, evt := range eventsToDispatch {
 		handlerFailed := cli.dispatchEvent(evt)
 		if handlerFailed {
@@ -149,6 +149,40 @@ func (cli *Client) handleAppStateRecovery(
 	return true
 }
 
+func (cli *Client) applyAppStateRecovery(ctx context.Context, reqID types.MessageID, snapshot *waSyncdSnapshotRecovery.SyncdSnapshotRecovery, eventsToDispatch *[]any) []any {
+	cli.appStateSyncLock.Lock()
+	defer cli.appStateSyncLock.Unlock()
+	if ctx.Err() != nil {
+		return nil
+	}
+	name := appstate.WAPatchName(snapshot.GetCollectionName())
+	version := snapshot.GetVersion().GetVersion()
+	currentVersion, _, err := cli.Store.AppState.GetAppStateVersion(ctx, string(name))
+	if err != nil {
+		cli.Log.Errorf("Failed to get current app state %s version for %s: %v", name, reqID, err)
+		return nil
+	} else if currentVersion >= version {
+		cli.Log.Infof("Ignoring app state recovery response for %s as current version %d is newer than or equal to recovery version %d", reqID, currentVersion, snapshot.GetVersion().GetVersion())
+		return nil
+	}
+	cli.Log.Debugf("Handling app state recovery response for %s", reqID)
+	mutations, err := cli.appStateProc.ProcessRecovery(ctx, snapshot)
+	if err != nil {
+		cli.Log.Warnf("Failed to parse app state recovery blob for %s: %v", reqID, err)
+		return nil
+	}
+	err = cli.collectEventsToDispatch(ctx, name, mutations, true, eventsToDispatch)
+	if err != nil {
+		cli.Log.Warnf("Failed to collect app state events for %s: %v", reqID, err)
+		return nil
+	}
+	var result []any
+	if eventsToDispatch != nil {
+		result = *eventsToDispatch
+	}
+	return append(result, &events.AppStateSyncComplete{Name: name, Version: version, Recovery: true})
+}
+
 func (cli *Client) applyAppStatePatches(
 	ctx context.Context,
 	name appstate.WAPatchName,
@@ -157,12 +191,31 @@ func (cli *Client) applyAppStatePatches(
 	fullSync bool,
 	eventsToDispatch *[]any,
 ) (appstate.HashState, error) {
+	var syncErrors []*events.AppStateSyncError
+	newState, err := cli.applyAppStatePatchesNoDispatch(ctx, name, state, patches, fullSync, eventsToDispatch, &syncErrors)
+	for _, evt := range syncErrors {
+		cli.dispatchEvent(evt)
+	}
+	return newState, err
+}
+
+// applyAppStatePatchesNoDispatch defers sync error callbacks until the caller
+// releases its operation lock. The DangerousInternals wrapper dispatches directly.
+func (cli *Client) applyAppStatePatchesNoDispatch(
+	ctx context.Context,
+	name appstate.WAPatchName,
+	state appstate.HashState,
+	patches *appstate.PatchList,
+	fullSync bool,
+	eventsToDispatch *[]any,
+	syncErrors *[]*events.AppStateSyncError,
+) (appstate.HashState, error) {
 	mutations, newState, err := cli.appStateProc.DecodePatches(ctx, patches, state, true)
 	if err != nil {
 		if errors.Is(err, appstate.ErrKeyNotFound) {
 			go cli.requestMissingAppStateKeys(context.WithoutCancel(ctx), patches)
 		} else {
-			cli.dispatchEvent(&events.AppStateSyncError{Name: name, FullSync: fullSync, Error: err})
+			*syncErrors = append(*syncErrors, &events.AppStateSyncError{Name: name, FullSync: fullSync, Error: err})
 		}
 		return state, fmt.Errorf("failed to decode app state %s patches: %w", name, err)
 	}
@@ -538,6 +591,31 @@ func (cli *Client) sendAppState(ctx context.Context, patch appstate.PatchInfo, a
 	if cli == nil {
 		return ErrClientIsNil
 	}
+	var syncErrors []*events.AppStateSyncError
+	var eventsToDispatch []any
+	var err error
+	func() {
+		cli.appStateSyncLock.Lock()
+		defer cli.appStateSyncLock.Unlock()
+		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors)
+	}()
+	for _, evt := range syncErrors {
+		cli.dispatchEvent(evt)
+	}
+	if len(eventsToDispatch) > 0 {
+		go func() {
+			for _, evt := range eventsToDispatch {
+				cli.dispatchEvent(evt)
+			}
+		}()
+	}
+	return err
+}
+
+func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchInfo, allowRetry bool, eventsToDispatch *[]any, syncErrors *[]*events.AppStateSyncError) error {
+	if err := ctx.Err(); err != nil {
+		return err
+	}
 	version, hash, err := cli.Store.AppState.GetAppStateVersion(ctx, string(patch.Type))
 	if err != nil {
 		return err
@@ -595,33 +673,25 @@ func (cli *Client) sendAppState(ctx context.Context, patch appstate.PatchInfo, a
 		}
 		if ok && errorTag.AttrGetter().Int("code") == 409 && allowRetry {
 			zerolog.Ctx(ctx).Warn().Err(mainErr).Msg("Failed to update app state, trying to apply conflicts and retry")
-			var eventsToDispatch []any
+			var conflictEvents []any
 			patches, err := appstate.ParsePatchList(ctx, &respCollection, cli.downloadExternalAppStateBlob)
 			if err != nil {
 				return fmt.Errorf("%w (also, parsing patches in the response failed: %w)", mainErr, err)
-			} else if _, err = cli.applyAppStatePatches(ctx, patch.Type, state, patches, false, &eventsToDispatch); err != nil {
+			} else if _, err = cli.applyAppStatePatchesNoDispatch(ctx, patch.Type, state, patches, false, &conflictEvents, syncErrors); err != nil {
 				return fmt.Errorf("%w (also, applying patches in the response failed: %w)", mainErr, err)
 			} else {
 				zerolog.Ctx(ctx).Debug().Msg("Retrying app state send after applying conflicting patches")
-				go func() {
-					for _, evt := range eventsToDispatch {
-						cli.dispatchEvent(evt)
-					}
-				}()
-				return cli.sendAppState(ctx, patch, false)
+				*eventsToDispatch = append(*eventsToDispatch, conflictEvents...)
+				return cli.sendAppStateLocked(ctx, patch, false, eventsToDispatch, syncErrors)
 			}
 		}
 		return mainErr
 	}
-	eventsToDispatch, err := cli.fetchAppState(ctx, patch.Type, false, false)
+	fetchedEvents, err := cli.fetchAppStateLocked(ctx, patch.Type, false, false, syncErrors)
 	if err != nil {
 		return fmt.Errorf("failed to fetch app state after sending update: %w", err)
 	}
-	go func() {
-		for _, evt := range eventsToDispatch {
-			cli.dispatchEvent(evt)
-		}
-	}()
+	*eventsToDispatch = append(*eventsToDispatch, fetchedEvents...)
 
 	return nil
 }
