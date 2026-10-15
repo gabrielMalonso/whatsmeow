@@ -13,12 +13,13 @@ import (
 	"testing"
 	"time"
 
+	"google.golang.org/protobuf/proto"
+
 	"go.mau.fi/whatsmeow/appstate"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery"
 	"go.mau.fi/whatsmeow/store"
 	"go.mau.fi/whatsmeow/types/events"
-	"google.golang.org/protobuf/proto"
 )
 
 // The reset gate exposes the interval where a recovery has removed the old
@@ -184,5 +185,24 @@ func TestCanceledAppStateOperationsPreserveState(t *testing.T) {
 				t.Fatalf("canceled operation advanced state to %d", version)
 			}
 		})
+	}
+}
+
+func TestAppStateFetchErrorCallbacksCanSend(t *testing.T) {
+	cli := recoveryTestClient(&recoveryTestStore{})
+	var called bool
+	cli.AddEventHandler(func(evt any) {
+		if _, ok := evt.(*events.AppStateSyncError); ok {
+			called = true
+			err := cli.SendAppState(t.Context(), appstate.PatchInfo{Type: appstate.WAPatchRegularLow})
+			if err == nil || err.Error() != "no app state keys found, creating app state keys is not yet supported" {
+				t.Errorf("callback send result: %v", err)
+			}
+		}
+	})
+	done := make(chan error, 1)
+	go func() { done <- cli.FetchAppState(t.Context(), appstate.WAPatchRegularLow, true, false) }()
+	if err := recoveryTestAwait(t, done); !errors.Is(err, ErrNotConnected) || !called {
+		t.Fatalf("fetch error/callback lost: %v (called=%v)", err, called)
 	}
 }

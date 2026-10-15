@@ -93,7 +93,7 @@ func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatc
 		patches, err := cli.fetchAppStatePatches(ctx, name, state.Version, wantSnapshot)
 		if err != nil {
 			if fullSync && ctx.Err() == nil && cli.BackgroundEventCtx.Err() == nil {
-				cli.dispatchEvent(&events.AppStateSyncError{Name: name, FullSync: fullSync, Error: err})
+				*syncErrors = append(*syncErrors, &events.AppStateSyncError{Name: name, FullSync: fullSync, Error: err})
 			}
 			return nil, fmt.Errorf("failed to fetch app state %s patches: %w", name, err)
 		} else if !wantSnapshot && patches.Snapshot != nil {
