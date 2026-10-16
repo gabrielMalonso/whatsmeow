@@ -12,12 +12,13 @@ import (
 	"context"
 	"io"
 
+	"google.golang.org/protobuf/encoding/protowire"
+	"google.golang.org/protobuf/proto"
+
 	"go.mau.fi/whatsmeow/appstate"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery"
 	"go.mau.fi/whatsmeow/types/events"
-	"google.golang.org/protobuf/encoding/protowire"
-	"google.golang.org/protobuf/proto"
 )
 
 // Peer recovery is not a cryptographic anchor for this policy. Classify with

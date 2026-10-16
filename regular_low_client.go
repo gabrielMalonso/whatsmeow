@@ -16,6 +16,8 @@ import (
 	"sync"
 	"time"
 
+	"google.golang.org/protobuf/proto"
+
 	"go.mau.fi/whatsmeow/appstate"
 	"go.mau.fi/whatsmeow/proto/waServerSync"
 	"go.mau.fi/whatsmeow/proto/waSyncAction"
@@ -23,7 +25,6 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 	waLog "go.mau.fi/whatsmeow/util/log"
-	"google.golang.org/protobuf/proto"
 )
 
 var ErrRegularLowAnchorRequired = errors.New("regular_low requires explicit full sync with an authenticated snapshot")
@@ -50,6 +51,8 @@ func (e *RegularLowSendPreflightError) Unwrap() error { return e.Err }
 // only the last local fetch/projection, not freshness, canonical aggregate
 // authentication, downstream persistence or operation admission. Version is the
 // last complete Decode result; a failed native write may have advanced the store.
+// Disconnect supersedes in-flight fetch/send results. A later delta fetch can
+// reuse a valid anchor; a failed submitted send requires explicit reanchoring.
 type RegularLowPolicyStatus struct {
 	Enabled               bool   `json:"enabled"`
 	Anchored              bool   `json:"anchored"`
@@ -77,12 +80,14 @@ type RegularLowChatProjection struct {
 }
 
 type regularLowClient struct {
-	mu      sync.RWMutex // Status/getters never acquire the fetch/send lock.
-	status  RegularLowPolicyStatus
-	session *appstate.RegularLowDecodeSession // Only appStateSyncLock writers.
-	state   appstate.HashState
-	active  map[string]appstate.Mutation // Supported product projection, not crypto map.
-	chat    map[types.JID]RegularLowChatProjection
+	mu     sync.RWMutex // Status/getters never acquire the fetch/send lock.
+	status RegularLowPolicyStatus
+	// Protected by mu; disconnect supersedes the whole fetch/send operation.
+	generation uint64
+	session    *appstate.RegularLowDecodeSession // Only appStateSyncLock writers.
+	state      appstate.HashState
+	active     map[string]appstate.Mutation // Supported product projection, not crypto map.
+	chat       map[types.JID]RegularLowChatProjection
 }
 
 // NewClientWithRegularLowPolicy selects an immutable regular_low policy. Other
@@ -141,10 +146,42 @@ func (cli *Client) RegularLowChatProjection(jid types.JID) RegularLowChatProject
 	return out
 }
 
-func (p *regularLowClient) incomplete() {
+func (p *regularLowClient) incomplete() uint64 {
 	p.mu.Lock()
+	defer p.mu.Unlock()
 	p.status.FetchComplete = false
-	p.mu.Unlock()
+	return p.generation
+}
+
+func (p *regularLowClient) disconnected() {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.generation++
+	p.status.FetchComplete = false
+}
+
+func (p *regularLowClient) checkGeneration(generation uint64) error {
+	p.mu.RLock()
+	defer p.mu.RUnlock()
+	if p.generation != generation {
+		return ErrRegularLowFetchRequired
+	}
+	return nil
+}
+
+func (p *regularLowClient) sendGeneration() (uint64, error) {
+	p.mu.RLock()
+	defer p.mu.RUnlock()
+	if !p.status.Anchored {
+		return 0, ErrRegularLowAnchorRequired
+	}
+	if !p.status.Valid {
+		return 0, ErrRegularLowSessionInvalid
+	}
+	if !p.status.FetchComplete {
+		return 0, ErrRegularLowFetchRequired
+	}
+	return p.generation, nil
 }
 
 func (p *regularLowClient) invalidate() {
@@ -240,8 +277,15 @@ type lowProjectionKey struct {
 
 // Project only current supported state after every page was received/committed.
 // No generic AppState, destructive historical callbacks or intermediate effects.
-func (cli *Client) projectRegularLow(ctx context.Context) ([]any, error) {
+func (cli *Client) projectRegularLow(ctx context.Context, generation uint64) ([]any, error) {
 	p := cli.regularLow
+	if err := ctx.Err(); err != nil {
+		p.invalidate()
+		return nil, err
+	}
+	if err := p.checkGeneration(generation); err != nil {
+		return nil, err
+	}
 	grouped := map[lowProjectionKey][]appstate.Mutation{}
 	for _, m := range p.active {
 		if len(m.Index) < 2 {
@@ -336,10 +380,17 @@ func (cli *Client) projectRegularLow(ctx context.Context) ([]any, error) {
 			output = append(output, event)
 		}
 	}
+	if err := ctx.Err(); err != nil {
+		p.invalidate()
+		return nil, err
+	}
 	p.mu.Lock()
+	defer p.mu.Unlock()
+	if p.generation != generation {
+		return nil, ErrRegularLowFetchRequired
+	}
 	p.chat = chats
 	p.status.FetchComplete = true
-	p.mu.Unlock()
 	return output, nil
 }
 
@@ -423,6 +474,7 @@ func (cli *Client) checkRegularLowSendProjection(patch appstate.PatchInfo) error
 	if len(patch.Mutations) == 0 {
 		return ErrRegularLowProjectionUnknown
 	}
+	requested := map[lowProjectionKey]bool{}
 	for _, mutation := range patch.Mutations {
 		if len(mutation.Index) != 2 || mutation.Value == nil {
 			return ErrRegularLowProjectionUnknown
@@ -432,6 +484,11 @@ func (cli *Client) checkRegularLowSendProjection(patch appstate.PatchInfo) error
 			return ErrRegularLowProjectionUnknown
 		}
 		domain := mutation.Index[0]
+		key := lowProjectionKey{jid, domain}
+		if requested[key] {
+			return ErrRegularLowProjectionUnknown
+		}
+		requested[key] = true
 		switch domain {
 		case appstate.IndexArchive:
 			if action := mutation.Value.GetArchiveChatAction(); action == nil || action.Archived == nil {
@@ -459,7 +516,7 @@ func (cli *Client) checkRegularLowSendProjection(patch appstate.PatchInfo) error
 				continue
 			}
 			count++
-			if count > 1 || len(row.Index) != 2 || row.Action == nil {
+			if count > 1 || len(row.Index) != 2 || row.Index[1] != mutation.Index[1] || row.Action == nil {
 				return ErrRegularLowProjectionUnknown
 			}
 			switch domain {

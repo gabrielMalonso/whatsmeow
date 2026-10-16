@@ -38,6 +38,8 @@ type lowTestStore struct {
 	writes, resets         int
 	failMACs, failSettings bool
 	settings               map[types.JID]types.LocalChatSettings
+	beforeGetMAC           func()
+	afterSetting           func()
 }
 
 func (s *lowTestStore) PutAppStateVersion(ctx context.Context, name string, version uint64, hash [128]byte) error {
@@ -54,6 +56,12 @@ func (s *lowTestStore) PutAppStateMutationMACs(ctx context.Context, name string,
 	}
 	return s.recoveryTestStore.PutAppStateMutationMACs(ctx, name, version, macs)
 }
+func (s *lowTestStore) GetAppStateMutationMAC(ctx context.Context, name string, index []byte) ([]byte, error) {
+	if s.beforeGetMAC != nil {
+		s.beforeGetMAC()
+	}
+	return s.recoveryTestStore.GetAppStateMutationMAC(ctx, name, index)
+}
 func (s *lowTestStore) PutArchived(_ context.Context, jid types.JID, value bool) error {
 	if s.failSettings {
 		return errLowTestStore
@@ -61,6 +69,9 @@ func (s *lowTestStore) PutArchived(_ context.Context, jid types.JID, value bool)
 	row := s.settings[jid]
 	row.Archived = value
 	s.settings[jid] = row
+	if s.afterSetting != nil {
+		s.afterSetting()
+	}
 	return nil
 }
 func (s *lowTestStore) PutPinned(_ context.Context, jid types.JID, value bool) error {
@@ -70,6 +81,9 @@ func (s *lowTestStore) PutPinned(_ context.Context, jid types.JID, value bool) e
 	row := s.settings[jid]
 	row.Pinned = value
 	s.settings[jid] = row
+	if s.afterSetting != nil {
+		s.afterSetting()
+	}
 	return nil
 }
 
@@ -516,5 +530,65 @@ func TestRegularLowCurrentProjectionAndRecovery(t *testing.T) {
 	}
 	if regularLowRecoveryCollectionAllowed(appstate.WAPatchName("unknown")) {
 		t.Fatal("unknown recovery permitted")
+	}
+}
+
+func TestRegularLowFetchCannotCompleteAcrossDisconnect(t *testing.T) {
+	cli, _, peer := lowTestClient(t, true)
+	author := newAppStateProtocolClient()
+	first := lowTestPatch(t, author, appstate.BuildPin(lowTestJID, false), false)
+	lowTestAnchor(t, cli, peer, first)
+	done := make(chan lowTestResult, 1)
+	go func() {
+		evts, err := cli.fetchAppState(t.Context(), appstate.WAPatchRegularLow, false, false)
+		done <- lowTestResult{evts, err}
+	}()
+	peer.request(t, 1, false)
+	// Exercise the policy transition used by both disconnect paths without
+	// closing a socket or accessing a production connection.
+	cli.regularLow.disconnected()
+	peer.respond(t, appStateTestCollection(t, false, false))
+	result := recoveryTestAwait(t, done)
+	if !errors.Is(result.err, ErrRegularLowFetchRequired) || len(result.events) != 0 {
+		t.Fatalf("fetch crossed disconnect: %+v", result)
+	}
+	if status := cli.RegularLowPolicyStatus(); !status.Valid || status.FetchComplete || cli.RegularLowChatProjection(lowTestJID).PinKnown {
+		t.Fatalf("stale fetch restored readiness: %+v", status)
+	}
+	// A new delta fetch can use the retained anchor.
+	if retry := lowTestFetch(t, cli, peer, false, 1, appStateTestCollection(t, false, false)); retry.err != nil || !cli.RegularLowPolicyStatus().FetchComplete {
+		t.Fatalf("fresh fetch failed: %+v", retry)
+	}
+}
+
+func TestRegularLowDisconnectDuringProjection(t *testing.T) {
+	cli, s, peer := lowTestClient(t, true)
+	author := newAppStateProtocolClient()
+	first := lowTestPatch(t, author, appstate.BuildPin(lowTestJID, false), false)
+	lowTestAnchor(t, cli, peer, first)
+	s.afterSetting = func() { cli.regularLow.disconnected() }
+	result := lowTestFetch(t, cli, peer, false, 1, appStateTestCollection(t, false, false))
+	if !errors.Is(result.err, ErrRegularLowFetchRequired) || len(result.events) != 0 || cli.RegularLowPolicyStatus().FetchComplete || cli.RegularLowChatProjection(lowTestJID).PinKnown {
+		t.Fatalf("projection crossed disconnect: %+v", result)
+	}
+	s.afterSetting = nil
+	if retry := lowTestFetch(t, cli, peer, false, 1, appStateTestCollection(t, false, false)); retry.err != nil || !cli.RegularLowChatProjection(lowTestJID).PinKnown {
+		t.Fatalf("new fetch was blocked by old generation: %+v", retry)
+	}
+}
+
+func TestRegularLowIgnoresOldSocketDisconnect(t *testing.T) {
+	cli, _, peer := lowTestClient(t, true)
+	author := newAppStateProtocolClient()
+	first := lowTestPatch(t, author, appstate.BuildPin(lowTestJID, false), false)
+	lowTestAnchor(t, cli, peer, first)
+	oldSocket := cli.socket
+	peer = newAppStateTestPeer(t, cli)
+	if result := lowTestFetch(t, cli, peer, false, 1, appStateTestCollection(t, false, false)); result.err != nil {
+		t.Fatal(result.err)
+	}
+	cli.onDisconnect(t.Context(), oldSocket, false)
+	if !cli.RegularLowPolicyStatus().FetchComplete || !cli.RegularLowChatProjection(lowTestJID).PinKnown {
+		t.Fatal("old socket callback revoked the newer socket's projection")
 	}
 }

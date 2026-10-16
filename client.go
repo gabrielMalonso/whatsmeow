@@ -608,13 +608,13 @@ func (cli *Client) IsLoggedIn() bool {
 }
 
 func (cli *Client) onDisconnect(ctx context.Context, ns *socket.NoiseSocket, remote bool) {
-	if cli.regularLow != nil {
-		cli.regularLow.incomplete()
-	}
 	ns.Stop(false, false)
 	cli.socketLock.Lock()
 	defer cli.socketLock.Unlock()
 	if cli.socket == ns {
+		if cli.regularLow != nil {
+			cli.regularLow.disconnected()
+		}
 		cli.socket = nil
 		cli.clearResponseWaiters(xmlStreamEndNode)
 		if !cli.isExpectedDisconnect() && (cli.forceAutoReconnect.Swap(false) || remote) {
@@ -702,7 +702,7 @@ func (cli *Client) Disconnect() {
 		return
 	}
 	if cli.regularLow != nil {
-		cli.regularLow.incomplete()
+		cli.regularLow.disconnected()
 	}
 	cli.socketLock.Lock()
 	cli.expectDisconnect()

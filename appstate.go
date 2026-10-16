@@ -52,7 +52,11 @@ func (cli *Client) fetchAppState(ctx context.Context, name appstate.WAPatchName,
 	var err error
 	func() {
 		defer cli.appStateSyncLock.Release(1)
-		eventsToDispatch, err = cli.fetchAppStateLocked(ctx, name, fullSync, onlyIfNotSynced, &syncErrors)
+		var generation uint64
+		if cli.regularLow != nil && name == appstate.WAPatchRegularLow {
+			generation = cli.regularLow.incomplete()
+		}
+		eventsToDispatch, err = cli.fetchAppStateLocked(ctx, name, fullSync, onlyIfNotSynced, &syncErrors, generation)
 	}()
 	for _, evt := range syncErrors {
 		cli.dispatchEvent(evt)
@@ -62,13 +66,16 @@ func (cli *Client) fetchAppState(ctx context.Context, name appstate.WAPatchName,
 
 // fetchAppStateLocked keeps the in-memory hash and stored mutation MACs in the
 // same operation, including all pages. Callers dispatch callbacks after unlock.
-func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatchName, fullSync, onlyIfNotSynced bool, syncErrors *[]*events.AppStateSyncError) (result []any, returnErr error) {
+func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatchName, fullSync, onlyIfNotSynced bool, syncErrors *[]*events.AppStateSyncError, generation uint64) (result []any, returnErr error) {
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
 	low := cli.regularLow != nil && name == appstate.WAPatchRegularLow
 	if low {
 		cli.regularLow.incomplete()
+		if err := cli.regularLow.checkGeneration(generation); err != nil {
+			return nil, err
+		}
 		errorCount := len(*syncErrors)
 		defer func() {
 			if returnErr != nil && len(*syncErrors) == errorCount {
@@ -139,6 +146,11 @@ func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatc
 			}
 			return nil, fmt.Errorf("unexpected non-empty input state (v%d) for %s when applying snapshot", state.Version, name)
 		}
+		if low {
+			if err := cli.regularLow.checkGeneration(generation); err != nil {
+				return nil, err
+			}
+		}
 		wantSnapshot = false
 		hasMore = patches.HasMorePatches
 		state, err = cli.applyAppStatePatchesNoDispatch(ctx, name, state, patches, fullSync, eventsToDispatchPtr, syncErrors)
@@ -147,7 +159,7 @@ func (cli *Client) fetchAppStateLocked(ctx context.Context, name appstate.WAPatc
 		}
 	}
 	if low {
-		return cli.projectRegularLow(ctx)
+		return cli.projectRegularLow(ctx, generation)
 	}
 	if fullSync {
 		cli.Log.Debugf("Full sync of app state %s completed. Current version: %d", name, state.Version)
@@ -726,19 +738,16 @@ func (cli *Client) sendAppStateEvents(ctx context.Context, patch appstate.PatchI
 	attempted := false
 	func() {
 		defer cli.appStateSyncLock.Release(1)
+		var generation uint64
 		if cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow {
-			if err = cli.regularLow.requireAnchor(); err != nil {
-				return
-			}
-			if !cli.RegularLowPolicyStatus().FetchComplete {
-				err = ErrRegularLowFetchRequired
+			if generation, err = cli.regularLow.sendGeneration(); err != nil {
 				return
 			}
 			if err = cli.checkRegularLowSendProjection(patch); err != nil {
 				return
 			}
 		}
-		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors, &attempted)
+		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors, &attempted, generation)
 	}()
 	if err != nil && cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow && !attempted {
 		err = &RegularLowSendPreflightError{Err: err}
@@ -756,7 +765,7 @@ func (cli *Client) sendAppStateEvents(ctx context.Context, patch appstate.PatchI
 	return eventsToDispatch, err
 }
 
-func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchInfo, allowRetry bool, eventsToDispatch *[]any, syncErrors *[]*events.AppStateSyncError, attempted *bool) (returnErr error) {
+func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchInfo, allowRetry bool, eventsToDispatch *[]any, syncErrors *[]*events.AppStateSyncError, attempted *bool, generation uint64) (returnErr error) {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -785,6 +794,9 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 	}
 	if low {
 		if err := cli.checkRegularLowEncodedIndexes(patch, encodedPatch); err != nil {
+			return err
+		}
+		if err := cli.regularLow.checkGeneration(generation); err != nil {
 			return err
 		}
 		cli.regularLow.incomplete()
@@ -825,6 +837,11 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 		return err
 	}
 
+	if low {
+		if err := cli.regularLow.checkGeneration(generation); err != nil {
+			return err
+		}
+	}
 	respCollection, ok := resp.GetOptionalChildByTag("sync", "collection")
 	if !ok {
 		return &ElementMissingError{Tag: "collection", In: "app state send response"}
@@ -856,12 +873,12 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 				}
 				zerolog.Ctx(ctx).Debug().Msg("Retrying app state send after applying conflicting patches")
 				*eventsToDispatch = append(*eventsToDispatch, conflictEvents...)
-				return cli.sendAppStateLocked(ctx, patch, false, eventsToDispatch, syncErrors, attempted)
+				return cli.sendAppStateLocked(ctx, patch, false, eventsToDispatch, syncErrors, attempted, generation)
 			}
 		}
 		return mainErr
 	}
-	fetchedEvents, err := cli.fetchAppStateLocked(ctx, patch.Type, false, false, syncErrors)
+	fetchedEvents, err := cli.fetchAppStateLocked(ctx, patch.Type, false, false, syncErrors, generation)
 	if err != nil {
 		return fmt.Errorf("failed to fetch app state after sending update: %w", err)
 	}
@@ -870,6 +887,9 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 			return err
 		}
 		if err := cli.confirmRegularLowSend(ctx, encodedPatch, version); err != nil {
+			return err
+		}
+		if err := cli.regularLow.checkGeneration(generation); err != nil {
 			return err
 		}
 	}
