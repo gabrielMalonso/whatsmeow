@@ -698,6 +698,8 @@ func (cli *Client) sendAppState(ctx context.Context, patch appstate.PatchInfo, a
 // SendRegularLowStateEvents returns the exact authenticated post-fetch product
 // events from the normal send/409/reencode path. These events are not dispatched
 // globally; callers can persist them under their existing ordered write ticket.
+// RegularLowSendPreflightError distinguishes refusals before any mutating IQ
+// from errors after submission. Neither result rolls back previous fetches.
 func (cli *Client) SendRegularLowStateEvents(ctx context.Context, patch appstate.PatchInfo) ([]any, error) {
 	if cli == nil {
 		return nil, ErrClientIsNil
@@ -713,11 +715,15 @@ func (cli *Client) sendAppStateEvents(ctx context.Context, patch appstate.PatchI
 		return nil, ErrClientIsNil
 	}
 	if err := cli.appStateSyncLock.Acquire(ctx, 1); err != nil {
+		if cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow {
+			return nil, &RegularLowSendPreflightError{Err: err}
+		}
 		return nil, err
 	}
 	var syncErrors []*events.AppStateSyncError
 	var eventsToDispatch []any
 	var err error
+	attempted := false
 	func() {
 		defer cli.appStateSyncLock.Release(1)
 		if cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow {
@@ -732,8 +738,11 @@ func (cli *Client) sendAppStateEvents(ctx context.Context, patch appstate.PatchI
 				return
 			}
 		}
-		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors)
+		err = cli.sendAppStateLocked(ctx, patch, allowRetry, &eventsToDispatch, &syncErrors, &attempted)
 	}()
+	if err != nil && cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow && !attempted {
+		err = &RegularLowSendPreflightError{Err: err}
+	}
 	for _, evt := range syncErrors {
 		cli.dispatchEvent(evt)
 	}
@@ -747,28 +756,17 @@ func (cli *Client) sendAppStateEvents(ctx context.Context, patch appstate.PatchI
 	return eventsToDispatch, err
 }
 
-func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchInfo, allowRetry bool, eventsToDispatch *[]any, syncErrors *[]*events.AppStateSyncError) (returnErr error) {
+func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchInfo, allowRetry bool, eventsToDispatch *[]any, syncErrors *[]*events.AppStateSyncError, attempted *bool) (returnErr error) {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
 	low := cli.regularLow != nil && patch.Type == appstate.WAPatchRegularLow
-	if low {
-		cli.regularLow.incomplete()
-		errorCount := len(*syncErrors)
-		defer func() {
-			if returnErr != nil {
-				cli.regularLow.invalidate()
-				if len(*syncErrors) == errorCount {
-					*syncErrors = append(*syncErrors, &events.AppStateSyncError{Name: patch.Type, Error: returnErr})
-				}
-			}
-		}()
-	}
 	version, hash, err := cli.Store.AppState.GetAppStateVersion(ctx, string(patch.Type))
 	if err != nil {
 		return err
 	}
 	if low && (appstate.HashState{Version: version, Hash: hash}) != cli.regularLow.state {
+		cli.regularLow.invalidate()
 		return ErrRegularLowSessionInvalid
 	}
 	// TODO create new key instead of reusing the primary client's keys
@@ -785,7 +783,23 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 	if err != nil {
 		return err
 	}
+	if low {
+		if err := cli.checkRegularLowEncodedIndexes(patch, encodedPatch); err != nil {
+			return err
+		}
+		cli.regularLow.incomplete()
+		errorCount := len(*syncErrors)
+		defer func() {
+			if returnErr != nil {
+				cli.regularLow.invalidate()
+				if len(*syncErrors) == errorCount {
+					*syncErrors = append(*syncErrors, &events.AppStateSyncError{Name: patch.Type, Error: returnErr})
+				}
+			}
+		}()
+	}
 
+	*attempted = true
 	resp, err := cli.sendIQ(ctx, infoQuery{
 		Namespace: "w:sync:app:state",
 		NoRetry:   low,
@@ -842,7 +856,7 @@ func (cli *Client) sendAppStateLocked(ctx context.Context, patch appstate.PatchI
 				}
 				zerolog.Ctx(ctx).Debug().Msg("Retrying app state send after applying conflicting patches")
 				*eventsToDispatch = append(*eventsToDispatch, conflictEvents...)
-				return cli.sendAppStateLocked(ctx, patch, false, eventsToDispatch, syncErrors)
+				return cli.sendAppStateLocked(ctx, patch, false, eventsToDispatch, syncErrors, attempted)
 			}
 		}
 		return mainErr

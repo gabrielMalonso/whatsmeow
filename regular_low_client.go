@@ -11,6 +11,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"sort"
 	"sync"
 	"time"
@@ -30,6 +31,20 @@ var ErrRegularLowSendUnconfirmed = errors.New("regular_low send outcome unconfir
 var ErrRegularLowFetchRequired = errors.New("regular_low requires a completed delta fetch before send")
 var ErrRegularLowSessionInvalid = errors.New("regular_low session invalid; explicit reanchor required")
 var ErrRegularLowProjectionUnknown = errors.New("regular_low requested projection is unknown or ambiguous")
+
+// RegularLowSendPreflightError means this send invocation submitted no mutating
+// app-state IQ. It does not roll back earlier fetches or external operations.
+// Once an IQ is attempted, including a 409 followed by a refused retry, errors
+// are never wrapped in this type.
+type RegularLowSendPreflightError struct {
+	Err error
+}
+
+func (e *RegularLowSendPreflightError) Error() string {
+	return fmt.Sprintf("regular_low send refused before submission: %v", e.Err)
+}
+
+func (e *RegularLowSendPreflightError) Unwrap() error { return e.Err }
 
 // RegularLowPolicyStatus describes the in-memory session. FetchComplete covers
 // only the last local fetch/projection, not freshness, canonical aggregate
@@ -461,6 +476,25 @@ func (cli *Client) checkRegularLowSendProjection(patch appstate.PatchInfo) error
 				if action == nil || action.Read == nil || action.GetRead() && !lowReadBounded(action) {
 					return ErrRegularLowProjectionUnknown
 				}
+			}
+		}
+	}
+	return nil
+}
+
+// A SET under a different physical index would leave the previous logical
+// record active. Until explicit key rotation is supported, refuse it before
+// sending rather than discovering that ambiguity in the authenticated echo.
+func (cli *Client) checkRegularLowEncodedIndexes(patch appstate.PatchInfo, encoded []byte) error {
+	var wire waServerSync.SyncdPatch
+	if err := proto.Unmarshal(encoded, &wire); err != nil || len(wire.Mutations) != len(patch.Mutations) {
+		return ErrRegularLowProjectionUnknown
+	}
+	for i, mutation := range wire.Mutations {
+		indexMAC := mutation.GetRecord().GetIndex().GetBlob()
+		for _, previous := range cli.regularLow.active {
+			if slices.Equal(previous.Index, patch.Mutations[i].Index) && !bytes.Equal(previous.IndexMAC, indexMAC) {
+				return ErrRegularLowProjectionUnknown
 			}
 		}
 	}
