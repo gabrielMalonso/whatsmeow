@@ -12,6 +12,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"slices"
 
@@ -317,6 +318,20 @@ func (proc *Processor) validatePatch(
 	currentState HashState,
 	validateMACs bool,
 ) (newState HashState, warn []error, err error) {
+	newState, warn, _, err = proc.validatePatchWithSnapshotPolicy(ctx, patchName, patch, currentState, validateMACs, false)
+	return
+}
+
+// Only a snapshot-anchored regular_low session can relax the patch aggregate.
+// DecodePatches keeps its strict behavior and validation order.
+func (proc *Processor) validatePatchWithSnapshotPolicy(
+	ctx context.Context,
+	patchName WAPatchName,
+	patch *waServerSync.SyncdPatch,
+	currentState HashState,
+	validateMACs bool,
+	allowSnapshotMismatch bool,
+) (newState HashState, warn []error, snapshotMismatch bool, err error) {
 	version := patch.GetVersion().GetVersion()
 	newState = currentState
 	newState.Version = version
@@ -343,7 +358,11 @@ func (proc *Processor) validatePatch(
 		var keys ExpandedAppStateKeys
 		keys, err = proc.validateSnapshotMAC(ctx, patchName, newState, patch.GetKeyID().GetID(), patch.GetSnapshotMAC())
 		if err != nil {
-			return
+			if !allowSnapshotMismatch || patchName != WAPatchRegularLow || !errors.Is(err, ErrMismatchingLTHash) {
+				return
+			}
+			snapshotMismatch = true
+			err = nil
 		}
 		patchMAC := generatePatchMAC(patch, patchName, keys.PatchMAC, patch.GetVersion().GetVersion())
 		if !hmac.Equal(patchMAC, patch.GetPatchMAC()) {

@@ -103,6 +103,7 @@ type Client struct {
 
 	appStateProc     *appstate.Processor
 	appStateSyncLock *semaphore.Weighted
+	regularLow       *regularLowClient
 
 	historySyncNotifications        chan *waE2E.HistorySyncNotification
 	historySyncHandlerStarted       atomic.Bool
@@ -611,6 +612,9 @@ func (cli *Client) onDisconnect(ctx context.Context, ns *socket.NoiseSocket, rem
 	cli.socketLock.Lock()
 	defer cli.socketLock.Unlock()
 	if cli.socket == ns {
+		if cli.regularLow != nil {
+			cli.regularLow.disconnected()
+		}
 		cli.socket = nil
 		cli.clearResponseWaiters(xmlStreamEndNode)
 		if !cli.isExpectedDisconnect() && (cli.forceAutoReconnect.Swap(false) || remote) {
@@ -696,6 +700,9 @@ func (cli *Client) IsConnected() bool {
 func (cli *Client) Disconnect() {
 	if cli == nil {
 		return
+	}
+	if cli.regularLow != nil {
+		cli.regularLow.disconnected()
 	}
 	cli.socketLock.Lock()
 	cli.expectDisconnect()

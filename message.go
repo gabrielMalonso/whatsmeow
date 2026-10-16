@@ -304,7 +304,7 @@ func (cli *Client) handlePlaintextMessage(ctx context.Context, info *types.Messa
 			OriginalTS: meta.AttrGetter().UnixTime("original_msg_t"),
 		}
 	}
-	return cli.dispatchEvent(evt.UnwrapRaw())
+	return cli.dispatchRegularLowAwareMessage(ctx, evt.UnwrapRaw())
 }
 
 func (cli *Client) migrateSessionStore(ctx context.Context, pn, lid types.JID) {
@@ -1175,7 +1175,7 @@ func (cli *Client) handleDecryptedMessage(ctx context.Context, info *types.Messa
 		return false
 	}
 	evt := &events.Message{Info: *info, RawMessage: msg, RetryCount: retryCount}
-	return cli.dispatchEvent(evt.UnwrapRaw())
+	return cli.dispatchRegularLowAwareMessage(ctx, evt.UnwrapRaw())
 }
 
 // SendProtocolMessageReceipt sends a receipt for a protocol message back to the phone.
