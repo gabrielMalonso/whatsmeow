@@ -1,0 +1,432 @@
+{"Time":"2026-10-16T11:59:53.254517904-03:00","Action":"start","Package":"go.mau.fi/whatsmeow"}
+{"Time":"2026-10-16T11:59:53.254884725-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/appstate"}
+{"Time":"2026-10-16T11:59:53.255115215-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/appstate/lthash"}
+{"Time":"2026-10-16T11:59:53.2552188-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/appstate/lthash","Output":"?   \tgo.mau.fi/whatsmeow/appstate/lthash\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255339186-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/appstate/lthash","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255324242-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/argo"}
+{"Time":"2026-10-16T11:59:53.255410747-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/argo","Output":"?   \tgo.mau.fi/whatsmeow/argo\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255434314-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/argo","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255469762-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/binary"}
+{"Time":"2026-10-16T11:59:53.255492973-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/binary","Output":"?   \tgo.mau.fi/whatsmeow/binary\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255500381-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/binary","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255517564-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/binary/proto"}
+{"Time":"2026-10-16T11:59:53.255537262-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/binary/proto","Output":"?   \tgo.mau.fi/whatsmeow/binary/proto\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255546692-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/binary/proto","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255558506-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/binary/token"}
+{"Time":"2026-10-16T11:59:53.25557563-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/binary/token","Output":"?   \tgo.mau.fi/whatsmeow/binary/token\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255582152-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/binary/token","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255595195-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto"}
+{"Time":"2026-10-16T11:59:53.255612335-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto","Output":"?   \tgo.mau.fi/whatsmeow/proto\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.25561912-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255630271-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/armadilloutil"}
+{"Time":"2026-10-16T11:59:53.255648923-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/armadilloutil","Output":"?   \tgo.mau.fi/whatsmeow/proto/armadilloutil\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255658494-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/armadilloutil","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.25567161-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloAddMessage"}
+{"Time":"2026-10-16T11:59:53.255688161-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloAddMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloAddMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255697355-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloAddMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255709978-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeActionLog"}
+{"Time":"2026-10-16T11:59:53.255725959-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeActionLog","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeActionLog\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255735702-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeActionLog","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.25575038-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeAdminMessage"}
+{"Time":"2026-10-16T11:59:53.255796436-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeAdminMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeAdminMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255804522-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeAdminMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255816802-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeCollection"}
+{"Time":"2026-10-16T11:59:53.255837121-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeCollection","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeCollection\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255844325-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeCollection","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255857111-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeLink"}
+{"Time":"2026-10-16T11:59:53.255865869-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeLink","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeLink\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255879842-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeLink","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255890368-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeMedia"}
+{"Time":"2026-10-16T11:59:53.255898-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeMedia","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeMedia\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255904302-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeMedia","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255915727-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeText"}
+{"Time":"2026-10-16T11:59:53.255931157-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeText","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloCoreTypeText\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.255937766-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloCoreTypeText","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.255975099-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloDeleteMessage"}
+{"Time":"2026-10-16T11:59:53.256083606-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloDeleteMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloDeleteMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256114978-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloDeleteMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256152316-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloSupplementMessage"}
+{"Time":"2026-10-16T11:59:53.25619731-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloSupplementMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloSupplementMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256213587-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloSupplementMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256238462-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload"}
+{"Time":"2026-10-16T11:59:53.256309881-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloTransportPayload\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256328096-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256351407-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/instamadilloXmaContentRef"}
+{"Time":"2026-10-16T11:59:53.256381898-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/instamadilloXmaContentRef","Output":"?   \tgo.mau.fi/whatsmeow/proto/instamadilloXmaContentRef\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256422302-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/instamadilloXmaContentRef","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256450507-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waAICommon"}
+{"Time":"2026-10-16T11:59:53.256488851-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waAICommon","Output":"?   \tgo.mau.fi/whatsmeow/proto/waAICommon\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.25650609-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waAICommon","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256527213-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waAICommonDeprecated"}
+{"Time":"2026-10-16T11:59:53.256543298-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waAICommonDeprecated","Output":"?   \tgo.mau.fi/whatsmeow/proto/waAICommonDeprecated\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256558499-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waAICommonDeprecated","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256579609-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waAdv"}
+{"Time":"2026-10-16T11:59:53.256595131-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waAdv","Output":"?   \tgo.mau.fi/whatsmeow/proto/waAdv\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256612646-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waAdv","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256631772-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waAea"}
+{"Time":"2026-10-16T11:59:53.256646443-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waAea","Output":"?   \tgo.mau.fi/whatsmeow/proto/waAea\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256658948-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waAea","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256685754-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloApplication"}
+{"Time":"2026-10-16T11:59:53.25671729-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloApplication","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloApplication\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256731097-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloApplication","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256751332-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupCommon"}
+{"Time":"2026-10-16T11:59:53.256766818-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupCommon","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloBackupCommon\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256779432-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupCommon","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256800649-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupMessage"}
+{"Time":"2026-10-16T11:59:53.25683069-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloBackupMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.256844316-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloBackupMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256863297-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloICDC"}
+{"Time":"2026-10-16T11:59:53.256878517-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloICDC","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloICDC\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.25689101-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloICDC","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.256907406-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloMiTransportAdminMessage"}
+{"Time":"2026-10-16T11:59:53.256981286-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloMiTransportAdminMessage","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloMiTransportAdminMessage\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257015591-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloMiTransportAdminMessage","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257046945-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloTransportEvent"}
+{"Time":"2026-10-16T11:59:53.257056806-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloTransportEvent","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloTransportEvent\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257065335-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloTransportEvent","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257078489-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waArmadilloXMA"}
+{"Time":"2026-10-16T11:59:53.257104502-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waArmadilloXMA","Output":"?   \tgo.mau.fi/whatsmeow/proto/waArmadilloXMA\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257114065-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waArmadilloXMA","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257129732-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waBotMetadata"}
+{"Time":"2026-10-16T11:59:53.257159024-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waBotMetadata","Output":"?   \tgo.mau.fi/whatsmeow/proto/waBotMetadata\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257166082-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waBotMetadata","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257178441-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waCert"}
+{"Time":"2026-10-16T11:59:53.257193049-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waCert","Output":"?   \tgo.mau.fi/whatsmeow/proto/waCert\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257200175-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waCert","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257211047-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waChatLockSettings"}
+{"Time":"2026-10-16T11:59:53.257218719-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waChatLockSettings","Output":"?   \tgo.mau.fi/whatsmeow/proto/waChatLockSettings\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257225847-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waChatLockSettings","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257235421-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waCommon"}
+{"Time":"2026-10-16T11:59:53.257242908-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waCommon","Output":"?   \tgo.mau.fi/whatsmeow/proto/waCommon\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257248976-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waCommon","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257330341-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waCommonParameterised"}
+{"Time":"2026-10-16T11:59:53.2574125-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waCommonParameterised","Output":"?   \tgo.mau.fi/whatsmeow/proto/waCommonParameterised\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257445703-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waCommonParameterised","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257484106-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waCompanionReg"}
+{"Time":"2026-10-16T11:59:53.257504418-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waCompanionReg","Output":"?   \tgo.mau.fi/whatsmeow/proto/waCompanionReg\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257519829-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waCompanionReg","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257546528-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplication"}
+{"Time":"2026-10-16T11:59:53.257564352-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplication","Output":"?   \tgo.mau.fi/whatsmeow/proto/waConsumerApplication\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257581801-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplication","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257620292-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplicationParameterised"}
+{"Time":"2026-10-16T11:59:53.257675227-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplicationParameterised","Output":"?   \tgo.mau.fi/whatsmeow/proto/waConsumerApplicationParameterised\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257692262-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waConsumerApplicationParameterised","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257718218-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waDeviceCapabilities"}
+{"Time":"2026-10-16T11:59:53.257727536-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waDeviceCapabilities","Output":"?   \tgo.mau.fi/whatsmeow/proto/waDeviceCapabilities\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257735167-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waDeviceCapabilities","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257747584-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waE2E"}
+{"Time":"2026-10-16T11:59:53.257755619-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waE2E","Output":"?   \tgo.mau.fi/whatsmeow/proto/waE2E\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257764727-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waE2E","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257775259-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waE2EGuest"}
+{"Time":"2026-10-16T11:59:53.257786353-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waE2EGuest","Output":"?   \tgo.mau.fi/whatsmeow/proto/waE2EGuest\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257792771-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waE2EGuest","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257806896-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waEphemeral"}
+{"Time":"2026-10-16T11:59:53.257814709-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waEphemeral","Output":"?   \tgo.mau.fi/whatsmeow/proto/waEphemeral\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257821034-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waEphemeral","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257830833-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waFingerprint"}
+{"Time":"2026-10-16T11:59:53.25783889-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waFingerprint","Output":"?   \tgo.mau.fi/whatsmeow/proto/waFingerprint\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257846217-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waFingerprint","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257857465-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waGroupHistory"}
+{"Time":"2026-10-16T11:59:53.257865396-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waGroupHistory","Output":"?   \tgo.mau.fi/whatsmeow/proto/waGroupHistory\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257871516-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waGroupHistory","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257880947-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waHistorySync"}
+{"Time":"2026-10-16T11:59:53.257888077-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waHistorySync","Output":"?   \tgo.mau.fi/whatsmeow/proto/waHistorySync\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257894727-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waHistorySync","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257905339-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waLidMigrationSyncPayload"}
+{"Time":"2026-10-16T11:59:53.257917175-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waLidMigrationSyncPayload","Output":"?   \tgo.mau.fi/whatsmeow/proto/waLidMigrationSyncPayload\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257923708-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waLidMigrationSyncPayload","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.25795415-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMediaEntryData"}
+{"Time":"2026-10-16T11:59:53.257961869-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMediaEntryData","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMediaEntryData\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257968138-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMediaEntryData","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.257979093-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMediaTransport"}
+{"Time":"2026-10-16T11:59:53.25798652-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMediaTransport","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMediaTransport\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.257993204-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMediaTransport","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258002395-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMmsRetry"}
+{"Time":"2026-10-16T11:59:53.258010261-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMmsRetry","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMmsRetry\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258016171-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMmsRetry","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258026355-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMsgApplication"}
+{"Time":"2026-10-16T11:59:53.258033723-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMsgApplication","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMsgApplication\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258039488-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMsgApplication","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258048356-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMsgTransport"}
+{"Time":"2026-10-16T11:59:53.258060785-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMsgTransport","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMsgTransport\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258066784-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMsgTransport","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258076541-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waMultiDevice"}
+{"Time":"2026-10-16T11:59:53.258085116-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waMultiDevice","Output":"?   \tgo.mau.fi/whatsmeow/proto/waMultiDevice\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258091285-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waMultiDevice","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.25810193-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces"}
+{"Time":"2026-10-16T11:59:53.258109842-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces","Output":"?   \tgo.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258115966-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258126441-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waReporting"}
+{"Time":"2026-10-16T11:59:53.258134102-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waReporting","Output":"?   \tgo.mau.fi/whatsmeow/proto/waReporting\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258140116-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waReporting","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258148311-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waRoutingInfo"}
+{"Time":"2026-10-16T11:59:53.258155894-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waRoutingInfo","Output":"?   \tgo.mau.fi/whatsmeow/proto/waRoutingInfo\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.25816272-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waRoutingInfo","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258172415-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waServerSync"}
+{"Time":"2026-10-16T11:59:53.25818526-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waServerSync","Output":"?   \tgo.mau.fi/whatsmeow/proto/waServerSync\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.2581913-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waServerSync","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258200642-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waStatusAttributions"}
+{"Time":"2026-10-16T11:59:53.258208058-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waStatusAttributions","Output":"?   \tgo.mau.fi/whatsmeow/proto/waStatusAttributions\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258214054-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waStatusAttributions","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258224405-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waSyncAction"}
+{"Time":"2026-10-16T11:59:53.258231356-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waSyncAction","Output":"?   \tgo.mau.fi/whatsmeow/proto/waSyncAction\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258237117-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waSyncAction","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258246597-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery"}
+{"Time":"2026-10-16T11:59:53.258277065-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery","Output":"?   \tgo.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258307823-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waSyncdSnapshotRecovery","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258321032-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waUserPassword"}
+{"Time":"2026-10-16T11:59:53.258340591-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waUserPassword","Output":"?   \tgo.mau.fi/whatsmeow/proto/waUserPassword\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258351423-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waUserPassword","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258364711-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waVnameCert"}
+{"Time":"2026-10-16T11:59:53.258420435-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waVnameCert","Output":"?   \tgo.mau.fi/whatsmeow/proto/waVnameCert\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258441169-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waVnameCert","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258459963-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waWa6"}
+{"Time":"2026-10-16T11:59:53.258471669-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waWa6","Output":"?   \tgo.mau.fi/whatsmeow/proto/waWa6\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258482984-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waWa6","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258492732-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waWeb"}
+{"Time":"2026-10-16T11:59:53.25850127-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waWeb","Output":"?   \tgo.mau.fi/whatsmeow/proto/waWeb\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258508544-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waWeb","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258519501-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waWebLabyrinthWaWasm"}
+{"Time":"2026-10-16T11:59:53.258540834-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waWebLabyrinthWaWasm","Output":"?   \tgo.mau.fi/whatsmeow/proto/waWebLabyrinthWaWasm\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258550433-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waWebLabyrinthWaWasm","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258560683-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/proto/waWinUIApi"}
+{"Time":"2026-10-16T11:59:53.258571626-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/proto/waWinUIApi","Output":"?   \tgo.mau.fi/whatsmeow/proto/waWinUIApi\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258622272-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/proto/waWinUIApi","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258646646-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/socket"}
+{"Time":"2026-10-16T11:59:53.258701087-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/socket","Output":"?   \tgo.mau.fi/whatsmeow/socket\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258731795-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/socket","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258757431-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/store"}
+{"Time":"2026-10-16T11:59:53.258780336-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/store","Output":"?   \tgo.mau.fi/whatsmeow/store\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258797463-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/store","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258819763-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/store/sqlstore"}
+{"Time":"2026-10-16T11:59:53.258835552-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/store/sqlstore","Output":"?   \tgo.mau.fi/whatsmeow/store/sqlstore\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258852869-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/store/sqlstore/upgrades"}
+{"Time":"2026-10-16T11:59:53.258851815-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/store/sqlstore","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258862457-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/store/sqlstore/upgrades","Output":"?   \tgo.mau.fi/whatsmeow/store/sqlstore/upgrades\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258870216-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/store/sqlstore/upgrades","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258881328-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/types"}
+{"Time":"2026-10-16T11:59:53.258888239-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/types","Output":"?   \tgo.mau.fi/whatsmeow/types\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258894196-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/types","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258901793-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/types/events"}
+{"Time":"2026-10-16T11:59:53.258910682-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/types/events","Output":"?   \tgo.mau.fi/whatsmeow/types/events\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258916848-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/types/events","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258924857-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/types/richresponse"}
+{"Time":"2026-10-16T11:59:53.258932124-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/types/richresponse","Output":"?   \tgo.mau.fi/whatsmeow/types/richresponse\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258938238-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/types/richresponse","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258946326-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/util/cbcutil"}
+{"Time":"2026-10-16T11:59:53.258957452-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/util/cbcutil","Output":"?   \tgo.mau.fi/whatsmeow/util/cbcutil\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258963311-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/util/cbcutil","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258972668-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/util/gcmutil"}
+{"Time":"2026-10-16T11:59:53.258984263-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/util/gcmutil","Output":"?   \tgo.mau.fi/whatsmeow/util/gcmutil\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.258990343-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/util/gcmutil","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.258998765-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/util/hkdfutil"}
+{"Time":"2026-10-16T11:59:53.259005775-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/util/hkdfutil","Output":"?   \tgo.mau.fi/whatsmeow/util/hkdfutil\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.259016472-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/util/hkdfutil","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.25902516-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/util/keys"}
+{"Time":"2026-10-16T11:59:53.259032165-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/util/keys","Output":"?   \tgo.mau.fi/whatsmeow/util/keys\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.25903782-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/util/keys","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.259045226-03:00","Action":"start","Package":"go.mau.fi/whatsmeow/util/log"}
+{"Time":"2026-10-16T11:59:53.259052169-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/util/log","Output":"?   \tgo.mau.fi/whatsmeow/util/log\t[no test files]\n"}
+{"Time":"2026-10-16T11:59:53.259058081-03:00","Action":"skip","Package":"go.mau.fi/whatsmeow/util/log","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.291014031-03:00","Action":"run","Package":"go.mau.fi/whatsmeow/appstate","Test":"TestRegularLowAuthenticatedRemove"}
+{"Time":"2026-10-16T11:59:53.291116792-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/appstate","Test":"TestRegularLowAuthenticatedRemove","Output":"=== RUN   TestRegularLowAuthenticatedRemove\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.304086079-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/appstate","Test":"TestRegularLowAuthenticatedRemove","Output":"--- PASS: TestRegularLowAuthenticatedRemove (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.304145508-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow/appstate","Test":"TestRegularLowAuthenticatedRemove","Elapsed":0.01}
+{"Time":"2026-10-16T11:59:53.304195265-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/appstate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.306683808-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery"}
+{"Time":"2026-10-16T11:59:53.306783877-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery","Output":"=== RUN   TestAppStateOperationsWaitForRecovery\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.306806001-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/fetch"}
+{"Time":"2026-10-16T11:59:53.30681314-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/fetch","Output":"=== RUN   TestAppStateOperationsWaitForRecovery/fetch\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.351892898-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/fetch","Output":"--- PASS: TestAppStateOperationsWaitForRecovery/fetch (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.351951871-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/fetch","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.351971777-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/send"}
+{"Time":"2026-10-16T11:59:53.351978999-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/send","Output":"=== RUN   TestAppStateOperationsWaitForRecovery/send\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.383374505-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/send","Output":"--- PASS: TestAppStateOperationsWaitForRecovery/send (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.383444397-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery/send","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.383464194-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery","Output":"--- PASS: TestAppStateOperationsWaitForRecovery (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.383473971-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsWaitForRecovery","Elapsed":0.08}
+{"Time":"2026-10-16T11:59:53.383524229-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRecoveryCallbacksCanFetch"}
+{"Time":"2026-10-16T11:59:53.383532686-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRecoveryCallbacksCanFetch","Output":"=== RUN   TestAppStateRecoveryCallbacksCanFetch\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.384275799-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRecoveryCallbacksCanFetch","Output":"--- PASS: TestAppStateRecoveryCallbacksCanFetch (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.384334917-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRecoveryCallbacksCanFetch","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.384347607-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState"}
+{"Time":"2026-10-16T11:59:53.384354861-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState","Output":"=== RUN   TestCanceledAppStateOperationsPreserveState\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.384377391-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/fetch"}
+{"Time":"2026-10-16T11:59:53.384384201-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/fetch","Output":"=== RUN   TestCanceledAppStateOperationsPreserveState/fetch\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.38492438-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/fetch","Output":"--- PASS: TestCanceledAppStateOperationsPreserveState/fetch (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.3849723-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/fetch","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.384984562-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/send"}
+{"Time":"2026-10-16T11:59:53.384991977-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/send","Output":"=== RUN   TestCanceledAppStateOperationsPreserveState/send\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.385418539-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/send","Output":"--- PASS: TestCanceledAppStateOperationsPreserveState/send (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.385476249-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/send","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.385489113-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/recovery"}
+{"Time":"2026-10-16T11:59:53.385497303-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/recovery","Output":"=== RUN   TestCanceledAppStateOperationsPreserveState/recovery\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.385995608-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/recovery","Output":"--- PASS: TestCanceledAppStateOperationsPreserveState/recovery (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.386044662-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState/recovery","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.386062577-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState","Output":"--- PASS: TestCanceledAppStateOperationsPreserveState (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.386072761-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestCanceledAppStateOperationsPreserveState","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.386103477-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateFetchErrorCallbacksCanSend"}
+{"Time":"2026-10-16T11:59:53.386110754-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateFetchErrorCallbacksCanSend","Output":"=== RUN   TestAppStateFetchErrorCallbacksCanSend\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.386854469-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateFetchErrorCallbacksCanSend","Output":"--- PASS: TestAppStateFetchErrorCallbacksCanSend (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.386911611-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateFetchErrorCallbacksCanSend","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.386925085-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting"}
+{"Time":"2026-10-16T11:59:53.386932608-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.386946213-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/before"}
+{"Time":"2026-10-16T11:59:53.386952755-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/before","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/fetch/before\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.387502517-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/before","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/fetch/before (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.387562252-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/before","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.387575912-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/during"}
+{"Time":"2026-10-16T11:59:53.387583422-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/during","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/fetch/during\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.418658816-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/during","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/fetch/during (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.418718101-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/fetch/during","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.418745394-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/before"}
+{"Time":"2026-10-16T11:59:53.418752739-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/before","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/send/before\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.419228938-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/before","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/send/before (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.419251282-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/before","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.419463507-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/during"}
+{"Time":"2026-10-16T11:59:53.419503534-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/during","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/send/during\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.450682601-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/during","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/send/during (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.450742293-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/send/during","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.45076157-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/before"}
+{"Time":"2026-10-16T11:59:53.450769292-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/before","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/recovery/before\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.451736566-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/before","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/recovery/before (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.45181715-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/before","Elapsed":0}
+{"Time":"2026-10-16T11:59:53.452035753-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/during"}
+{"Time":"2026-10-16T11:59:53.452070205-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/during","Output":"=== RUN   TestAppStateOperationsCancelWhileWaiting/recovery/during\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.483643356-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/during","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting/recovery/during (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.483704544-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting/recovery/during","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.483726114-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting","Output":"--- PASS: TestAppStateOperationsCancelWhileWaiting (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.483735562-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateOperationsCancelWhileWaiting","Elapsed":0.1}
+{"Time":"2026-10-16T11:59:53.483743661-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStatePaginatedFetchDefersRecovery"}
+{"Time":"2026-10-16T11:59:53.483750911-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStatePaginatedFetchDefersRecovery","Output":"=== RUN   TestAppStatePaginatedFetchDefersRecovery\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.543741445-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStatePaginatedFetchDefersRecovery","Output":"--- PASS: TestAppStatePaginatedFetchDefersRecovery (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.543811575-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStatePaginatedFetchDefersRecovery","Elapsed":0.06}
+{"Time":"2026-10-16T11:59:53.543840188-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery"}
+{"Time":"2026-10-16T11:59:53.543852501-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery","Output":"=== RUN   TestAppStateSendConflictRetryDefersRecovery\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.543942879-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=false"}
+{"Time":"2026-10-16T11:59:53.543961178-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=false","Output":"=== RUN   TestAppStateSendConflictRetryDefersRecovery/second_conflict=false\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.59362802-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=false","Output":"--- PASS: TestAppStateSendConflictRetryDefersRecovery/second_conflict=false (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.593705351-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=false","Elapsed":0.05}
+{"Time":"2026-10-16T11:59:53.593732456-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=true"}
+{"Time":"2026-10-16T11:59:53.593740758-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=true","Output":"=== RUN   TestAppStateSendConflictRetryDefersRecovery/second_conflict=true\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.610775645-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=true","Output":"--- PASS: TestAppStateSendConflictRetryDefersRecovery/second_conflict=true (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.610834356-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery/second_conflict=true","Elapsed":0.02}
+{"Time":"2026-10-16T11:59:53.610854851-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery","Output":"--- PASS: TestAppStateSendConflictRetryDefersRecovery (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.61087235-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateSendConflictRetryDefersRecovery","Elapsed":0.07}
+{"Time":"2026-10-16T11:59:53.610893802-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock"}
+{"Time":"2026-10-16T11:59:53.610901021-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock","Output":"=== RUN   TestAppStateRejectsTamperedPatchAfterUnlock\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.610975385-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/hash"}
+{"Time":"2026-10-16T11:59:53.610982779-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/hash","Output":"=== RUN   TestAppStateRejectsTamperedPatchAfterUnlock/hash\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.620038581-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/hash","Output":"--- PASS: TestAppStateRejectsTamperedPatchAfterUnlock/hash (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.620093613-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/hash","Elapsed":0.01}
+{"Time":"2026-10-16T11:59:53.620109186-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac"}
+{"Time":"2026-10-16T11:59:53.620116698-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac","Output":"=== RUN   TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.629642626-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac","Output":"--- PASS: TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.629709107-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock/patch_mac","Elapsed":0.01}
+{"Time":"2026-10-16T11:59:53.629749878-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock","Output":"--- PASS: TestAppStateRejectsTamperedPatchAfterUnlock (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.629798504-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestAppStateRejectsTamperedPatchAfterUnlock","Elapsed":0.02}
+{"Time":"2026-10-16T11:59:53.629887436-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication"}
+{"Time":"2026-10-16T11:59:53.629904958-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication","Output":"=== RUN   TestRegularLowAuthentication\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.629978066-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/default_strict"}
+{"Time":"2026-10-16T11:59:53.629993926-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/default_strict","Output":"=== RUN   TestRegularLowAuthentication/default_strict\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.67133895-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/default_strict","Output":"--- PASS: TestRegularLowAuthentication/default_strict (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.671429253-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/default_strict","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.671451284-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_mac"}
+{"Time":"2026-10-16T11:59:53.67146447-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_mac","Output":"=== RUN   TestRegularLowAuthentication/snapshot_mac\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.703595171-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_mac","Output":"--- PASS: TestRegularLowAuthentication/snapshot_mac (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.703669592-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_mac","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.703712601-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_content"}
+{"Time":"2026-10-16T11:59:53.703726926-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_content","Output":"=== RUN   TestRegularLowAuthentication/snapshot_content\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.738588434-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_content","Output":"--- PASS: TestRegularLowAuthentication/snapshot_content (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.738663752-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/snapshot_content","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:53.738683098-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/patch_mac"}
+{"Time":"2026-10-16T11:59:53.738690788-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/patch_mac","Output":"=== RUN   TestRegularLowAuthentication/patch_mac\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.778799886-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/patch_mac","Output":"--- PASS: TestRegularLowAuthentication/patch_mac (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.778870203-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/patch_mac","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.778897643-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/content"}
+{"Time":"2026-10-16T11:59:53.778910735-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/content","Output":"=== RUN   TestRegularLowAuthentication/content\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.817281645-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/content","Output":"--- PASS: TestRegularLowAuthentication/content (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.817366918-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/content","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.817398396-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/index"}
+{"Time":"2026-10-16T11:59:53.817412546-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/index","Output":"=== RUN   TestRegularLowAuthentication/index\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.856023916-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/index","Output":"--- PASS: TestRegularLowAuthentication/index (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.856088028-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/index","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.856105984-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/short_record"}
+{"Time":"2026-10-16T11:59:53.85612447-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/short_record","Output":"=== RUN   TestRegularLowAuthentication/short_record\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.893894791-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/short_record","Output":"--- PASS: TestRegularLowAuthentication/short_record (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.89396795-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication/short_record","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.89402771-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication","Output":"--- PASS: TestRegularLowAuthentication (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.894065994-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowAuthentication","Elapsed":0.26}
+{"Time":"2026-10-16T11:59:53.894128009-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowDegradedReconvergence"}
+{"Time":"2026-10-16T11:59:53.894136184-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowDegradedReconvergence","Output":"=== RUN   TestRegularLowDegradedReconvergence\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.934113107-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowDegradedReconvergence","Output":"--- PASS: TestRegularLowDegradedReconvergence (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.93418879-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowDegradedReconvergence","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.934205582-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle"}
+{"Time":"2026-10-16T11:59:53.934213026-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle","Output":"=== RUN   TestRegularLowLifecycle\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.934335338-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/restart"}
+{"Time":"2026-10-16T11:59:53.934354312-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/restart","Output":"=== RUN   TestRegularLowLifecycle/restart\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.969749583-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/restart","Output":"--- PASS: TestRegularLowLifecycle/restart (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:53.969813186-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/restart","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:53.969869574-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/read_iq"}
+{"Time":"2026-10-16T11:59:53.969877514-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/read_iq","Output":"=== RUN   TestRegularLowLifecycle/read_iq\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.007145201-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/read_iq","Output":"--- PASS: TestRegularLowLifecycle/read_iq (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.007209863-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/read_iq","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.007226055-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/paged_read_iq"}
+{"Time":"2026-10-16T11:59:54.007233377-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/paged_read_iq","Output":"=== RUN   TestRegularLowLifecycle/paged_read_iq\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.050311385-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/paged_read_iq","Output":"--- PASS: TestRegularLowLifecycle/paged_read_iq (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.050395034-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/paged_read_iq","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.050419401-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/cursor"}
+{"Time":"2026-10-16T11:59:54.050432104-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/cursor","Output":"=== RUN   TestRegularLowLifecycle/cursor\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.085531827-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/cursor","Output":"--- PASS: TestRegularLowLifecycle/cursor (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.085617168-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/cursor","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:54.085645944-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/store"}
+{"Time":"2026-10-16T11:59:54.085658949-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/store","Output":"=== RUN   TestRegularLowLifecycle/store\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.120720417-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/store","Output":"--- PASS: TestRegularLowLifecycle/store (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.12079889-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/store","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:54.120828978-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/projection"}
+{"Time":"2026-10-16T11:59:54.120842325-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/projection","Output":"=== RUN   TestRegularLowLifecycle/projection\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.161165801-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/projection","Output":"--- PASS: TestRegularLowLifecycle/projection (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.161281574-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/projection","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.161304577-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/invalidate"}
+{"Time":"2026-10-16T11:59:54.161312482-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/invalidate","Output":"=== RUN   TestRegularLowLifecycle/invalidate\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.195856324-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/invalidate","Output":"--- PASS: TestRegularLowLifecycle/invalidate (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.195936011-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle/invalidate","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:54.195967185-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle","Output":"--- PASS: TestRegularLowLifecycle (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.195976433-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowLifecycle","Elapsed":0.26}
+{"Time":"2026-10-16T11:59:54.195987509-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation"}
+{"Time":"2026-10-16T11:59:54.195994349-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation","Output":"=== RUN   TestRegularLowSendConfirmation\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.196058564-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/owned"}
+{"Time":"2026-10-16T11:59:54.196066169-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/owned","Output":"=== RUN   TestRegularLowSendConfirmation/owned\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.240336408-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/owned","Output":"--- PASS: TestRegularLowSendConfirmation/owned (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.240398524-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/owned","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.240414123-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/native"}
+{"Time":"2026-10-16T11:59:54.240421372-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/native","Output":"=== RUN   TestRegularLowSendConfirmation/native\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.280157363-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/native","Output":"--- PASS: TestRegularLowSendConfirmation/native (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.280225577-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/native","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.280275188-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict"}
+{"Time":"2026-10-16T11:59:54.280295618-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict","Output":"=== RUN   TestRegularLowSendConfirmation/conflict\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.310866234-03:00","Action":"output","Package":"go.mau.fi/whatsmeow/appstate","Output":"ok  \tgo.mau.fi/whatsmeow/appstate\t1.055s\n"}
+{"Time":"2026-10-16T11:59:54.312103875-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow/appstate","Elapsed":1.057}
+{"Time":"2026-10-16T11:59:54.326895427-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict","Output":"--- PASS: TestRegularLowSendConfirmation/conflict (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.327005331-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict","Elapsed":0.05}
+{"Time":"2026-10-16T11:59:54.327026642-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict_ambiguous"}
+{"Time":"2026-10-16T11:59:54.327034042-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict_ambiguous","Output":"=== RUN   TestRegularLowSendConfirmation/conflict_ambiguous\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.363458771-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict_ambiguous","Output":"--- PASS: TestRegularLowSendConfirmation/conflict_ambiguous (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.363556822-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/conflict_ambiguous","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.363575286-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/no_echo"}
+{"Time":"2026-10-16T11:59:54.363585221-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/no_echo","Output":"=== RUN   TestRegularLowSendConfirmation/no_echo\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.401126046-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/no_echo","Output":"--- PASS: TestRegularLowSendConfirmation/no_echo (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.401203785-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/no_echo","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.40122905-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/send_refusal"}
+{"Time":"2026-10-16T11:59:54.401241198-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/send_refusal","Output":"=== RUN   TestRegularLowSendConfirmation/send_refusal\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.435500096-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/send_refusal","Output":"--- PASS: TestRegularLowSendConfirmation/send_refusal (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.435555671-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation/send_refusal","Elapsed":0.03}
+{"Time":"2026-10-16T11:59:54.435573542-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation","Output":"--- PASS: TestRegularLowSendConfirmation (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.435582261-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowSendConfirmation","Elapsed":0.24}
+{"Time":"2026-10-16T11:59:54.43560114-03:00","Action":"run","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowCurrentProjectionAndRecovery"}
+{"Time":"2026-10-16T11:59:54.435637619-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowCurrentProjectionAndRecovery","Output":"=== RUN   TestRegularLowCurrentProjectionAndRecovery\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.476614995-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowCurrentProjectionAndRecovery","Output":"--- PASS: TestRegularLowCurrentProjectionAndRecovery (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:54.476668543-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Test":"TestRegularLowCurrentProjectionAndRecovery","Elapsed":0.04}
+{"Time":"2026-10-16T11:59:54.476683666-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T11:59:55.485577251-03:00","Action":"output","Package":"go.mau.fi/whatsmeow","Output":"ok  \tgo.mau.fi/whatsmeow\t2.230s\n"}
+{"Time":"2026-10-16T11:59:55.486593274-03:00","Action":"pass","Package":"go.mau.fi/whatsmeow","Elapsed":2.232}
